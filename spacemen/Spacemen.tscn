@@ -9,6 +9,8 @@ script = ExtResource( 1 )
 
 [node name="InputSignals" type="Node" parent="."]
 script = ExtResource( 3 )
+process_unhandled_input = true
 
 [node name="Ship" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 0 )
 [connection signal="on_ship_clicked" from="Ship" to="." method="on_ship_clicked"]

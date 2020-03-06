@@ -3,8 +3,10 @@ extends Node
 export var process_input			:= false
 export var process_unhandled_input 	:= false
 
-signal on_left_mouse_pressed
-signal on_right_mouse_pressed
+signal on_left_mouse_down
+signal on_left_mouse_up
+signal on_right_mouse_down
+signal on_right_mouse_up
 
 func _input(event):
 	if process_input:

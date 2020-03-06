@@ -2,12 +2,10 @@
 
 [ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=1]
 
-
 [sub_resource type="CircleShape2D" id=1]
-radius = 100.0
+radius = 20.0
 
 [node name="Ship" type="KinematicBody2D"]
-position = Vector2( 10, 10 )
 input_pickable = true
 script = ExtResource( 1 )
 
@@ -15,5 +13,6 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
-position = Vector2( 0, -7.5 )
+position = Vector2( 0, 7.5 )
+rotation = 3.14159
 polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
