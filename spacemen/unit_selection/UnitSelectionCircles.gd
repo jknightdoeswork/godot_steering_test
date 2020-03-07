@@ -1,13 +1,13 @@
 extends Node
 
-onready var unit_selector = $"../UnitSelector"
+onready var unit_selection = $"../UnitSelection"
 
 var selection_circles := []
 
 export(PackedScene) var selection_circle_scene
 
 func _ready():
-	var e = unit_selector.connect("on_selection_changed", self, "on_selection_changed")
+	var e = unit_selection.connect("on_selection_changed", self, "on_selection_changed")
 
 func on_selection_changed(selected_units):
 	print ("[UnitSelectionCircles] on_selection_changed")

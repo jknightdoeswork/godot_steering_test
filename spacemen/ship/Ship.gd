@@ -13,24 +13,22 @@ var _velocity := Vector2()
 var _drag := 0.1
 
 func _ready() -> void:
-	
-	
-	agent.linear_speed_max = 8000.0
-	agent.linear_acceleration_max = 500.0
-	agent.linear_drag_percentage = 0.1
-	agent.angular_speed_max = 250.0
-	agent.angular_acceleration_max = 100.0
-	agent.angular_drag_percentage = 0.25
+	agent.linear_speed_max 			= 8000.0
+	agent.linear_acceleration_max 	= 500.0
+	agent.linear_drag_percentage 	= 0.1
+	agent.angular_speed_max 		= 250.0
+	agent.angular_acceleration_max 	= 100.0
+	agent.angular_drag_percentage 	= 0.25
 
-	arrive_target.position = agent.position
-	arrive.deceleration_radius = 250.0
-	arrive.arrival_tolerance = 25.0
+	arrive_target.position 			= agent.position
+	arrive.deceleration_radius 		= 250.0
+	arrive.arrival_tolerance 		= 25.0
 	
 	look.alignment_tolerance = deg2rad(5.0)
 	look.deceleration_radius = deg2rad(45)
+	
 	blend.add(arrive, 1.0)
 	blend.add(look, 1.0)
-	
 	
 	
 func issue_arrive_order(arrive_position:Vector2):
