@@ -9,8 +9,11 @@ enum IdentityType {
 export(IdentityType) var type
 export(int) var faction
 
-func compare_identities(t:int, f:int):
-	if type == t:
-		if faction == f or f == -1 or faction == -1:
+func compare_identities(i:Identity):
+	if type == i.type:
+		if faction == i.faction or faction == -1 or i.faction == -1:
 			return true
 	return false
+
+func is_enemy(i:Identity):
+	return i.faction != faction

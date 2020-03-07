@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://spacemen/unit_selection/UnitSelector.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/Ship.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircles.gd" type="Script" id=5]
 [ext_resource path="res://spacemen/unit_selection/BoxSelector.gd" type="Script" id=6]
+[ext_resource path="res://spacemen/scripts/ShipSpawner.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.5, 0.5 )
@@ -40,7 +41,13 @@ script = ExtResource( 3 )
 script = ExtResource( 5 )
 selection_circle_scene = ExtResource( 4 )
 
-[node name="Ship" parent="." instance=ExtResource( 2 )]
+[node name="BlueTeam" type="Node2D" parent="."]
+position = Vector2( 30, 30 )
+script = ExtResource( 13 )
+ship_scene = ExtResource( 2 )
 
-[node name="Ship2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 135.661, 105.514 )
+[node name="RedTeam" type="Node2D" parent="."]
+position = Vector2( 994, 30 )
+script = ExtResource( 13 )
+faction = 1
+ship_scene = ExtResource( 2 )

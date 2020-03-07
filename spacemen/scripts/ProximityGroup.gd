@@ -5,11 +5,10 @@ signal on_group_changed
 signal on_unit_entered
 signal on_unit_exited
 
-export var identity_type := 0
-export var faction := -1
-
 var nearby_units := []
 var closest_unit:Node2D = null
+
+onready var identity:Identity = $"../Identity" as Identity
 
 func _ready():
 	connect("body_entered", self, "on_body_entered")
@@ -19,15 +18,17 @@ func nearby_units():
 	var bodies := get_overlapping_bodies()
 	var filtered_bodies := []
 	for b in bodies:
-		var identity = b.get_node("Identity")
-		if identity != null and identity.compare_identities(identity_type, faction):
-			filtered_bodies.append(b)
+		var other_identity = b.get_node("Identity")
+		if other_identity != null:
+			if identity.is_enemy(other_identity):
+				filtered_bodies.append(b)
+	
 	return filtered_bodies
 
 func on_body_entered(body:Node2D):
-	var identity = body.get_node("Identity")
-	if identity != null:
-		if identity.compare_identities(identity_type, faction):
+	var other_identity = body.get_node("Identity")
+	if other_identity != null:
+		if identity.is_enemy(other_identity):
 			var old_closest := closest_unit
 			closest_unit = select_closest_unit(closest_unit, body)
 			emit_signal("on_unit_entered", body)
@@ -38,9 +39,9 @@ func on_body_entered(body:Node2D):
 		print ("no id")
 
 func on_body_exited(body:Node):
-	var identity = body.get_node("Identity")
-	if identity != null:
-		if identity.compare_identities(identity_type, faction):
+	var other_identity = body.get_node("Identity")
+	if other_identity != null:
+		if identity.is_enemy(other_identity):
 			var old_closest := closest_unit
 			if closest_unit == body:
 				closest_unit = select_closest_unit_from_group(nearby_units())
