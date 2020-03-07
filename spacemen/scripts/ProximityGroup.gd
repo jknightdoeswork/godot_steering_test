@@ -5,7 +5,7 @@ signal on_group_changed
 signal on_unit_entered
 signal on_unit_exited
 
-export(Identity.IdentityType) var identity_type
+export var identity_type := 0
 export var faction := -1
 
 var nearby_units := []
@@ -20,7 +20,7 @@ func nearby_units():
 	var filtered_bodies := []
 	for b in bodies:
 		var identity = b.get_node("Identity")
-		if identity != null and identity.compare(identity_type, faction):
+		if identity != null and identity.compare_identities(identity_type, faction):
 			filtered_bodies.append(b)
 	return filtered_bodies
 
@@ -34,6 +34,8 @@ func on_body_entered(body:Node2D):
 			emit_signal("on_group_changed")
 			if closest_unit != old_closest:
 				emit_signal("on_closest_unit_changed")
+	else:
+		print ("no id")
 
 func on_body_exited(body:Node):
 	var identity = body.get_node("Identity")
