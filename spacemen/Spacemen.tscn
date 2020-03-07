@@ -1,15 +1,28 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://spacemen/SpacemenGame.gd" type="Script" id=1]
+[ext_resource path="res://spacemen/scripts/UnitSelector.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/Ship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://spacemen/scripts/InputSignals.gd" type="Script" id=3]
+[ext_resource path="res://spacemen/scripts/CircleLine.gd" type="Script" id=4]
 
 [node name="SpacemenGame" type="Node2D"]
+
+[node name="UnitSelector" type="Node" parent="."]
 script = ExtResource( 1 )
 
 [node name="InputSignals" type="Node" parent="."]
 script = ExtResource( 3 )
 process_unhandled_input = true
+
+[node name="SelectedCursor" type="Node2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="SelectedCursor"]
+points = PoolVector2Array( 20, 0, 19.5906, 4.02597, 18.3792, 7.88712, 16.4153, 11.4254, 13.7793, 14.4959, 10.5793, 16.9729, 6.94611, 18.755, 3.02856, 19.7694, -1.01298, 19.9743, -5.01305, 19.3615, -8.80788, 17.9561, -12.2421, 15.8155, -15.1752, 13.0274, -17.4869, 9.70604, -19.0828, 5.98726, -19.8974, 2.02337, -19.8974, -2.02337, -19.0828, -5.98726, -17.4869, -9.70604, -15.1752, -13.0274, -12.2421, -15.8155, -8.80788, -17.9561, -5.01305, -19.3615, -1.01298, -19.9743, 3.02856, -19.7694, 6.94611, -18.755, 10.5793, -16.9729, 13.7793, -14.4959, 16.4153, -11.4254, 18.3792, -7.88712, 19.5906, -4.02597, 20, -4.89843e-15 )
+width = 2.0
+default_color = Color( 0.505882, 0.756863, 0.6, 1 )
+script = ExtResource( 4 )
+numsides = 32
+radius = 2
 
 [node name="Ship" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )
