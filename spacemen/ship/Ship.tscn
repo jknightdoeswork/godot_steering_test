@@ -8,10 +8,10 @@
 [ext_resource path="res://spacemen/ship/Health.gd" type="Script" id=6]
 [ext_resource path="res://spacemen/ship/Identity.gd" type="Script" id=7]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 100.0
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 radius = 20.0
 
 [node name="Ship" type="KinematicBody2D"]
@@ -38,7 +38,7 @@ monitorable = false
 script = ExtResource( 3 )
 
 [node name="DetectionCircle" type="CollisionShape2D" parent="NearbyEnemies"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="BodyPolygon" type="Polygon2D" parent="."]
 position = Vector2( 0, 10 )
@@ -46,4 +46,4 @@ rotation = 3.14159
 polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
 
 [node name="BodyCircle" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+shape = SubResource( 2 )

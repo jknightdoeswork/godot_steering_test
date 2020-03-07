@@ -1,43 +1,58 @@
 extends Area2D
+
 signal on_closest_unit_changed
 signal on_group_changed
 signal on_unit_entered
 signal on_unit_exited
 
+export(Identity.IdentityType) var identity_type
+export var faction := -1
+
 var nearby_units := []
 var closest_unit:Node2D = null
-
 
 func _ready():
 	connect("body_entered", self, "on_body_entered")
 	connect("body_exited", self, "on_body_exited")
 
 func nearby_units():
-	return get_overlapping_bodies()
-	
+	var bodies := get_overlapping_bodies()
+	var filtered_bodies := []
+	for b in bodies:
+		var identity = b.get_node("Identity")
+		if identity != null and identity.compare(identity_type, faction):
+			filtered_bodies.append(b)
+	return filtered_bodies
+
 func on_body_entered(body:Node2D):
-	var old_closest := closest_unit
-	closest_unit = select_closest_unit(closest_unit, body)
-	emit_signal("on_unit_entered", body)
-	emit_signal("on_group_changed")
-	if closest_unit != old_closest:
-		emit_signal("on_closest_unit_changed")
-		
+	var identity = body.get_node("Identity")
+	if identity != null:
+		if identity.compare_identities(identity_type, faction):
+			var old_closest := closest_unit
+			closest_unit = select_closest_unit(closest_unit, body)
+			emit_signal("on_unit_entered", body)
+			emit_signal("on_group_changed")
+			if closest_unit != old_closest:
+				emit_signal("on_closest_unit_changed")
+
 func on_body_exited(body:Node):
-	var old_closest := closest_unit
-	if closest_unit == body:
-		closest_unit = select_closest_unit_from_group(nearby_units())
-	emit_signal("on_unit_exited", body)
-	emit_signal("on_group_changed")
-	if closest_unit != old_closest:
-		emit_signal("on_closest_unit_changed")
-	
+	var identity = body.get_node("Identity")
+	if identity != null:
+		if identity.compare_identities(identity_type, faction):
+			var old_closest := closest_unit
+			if closest_unit == body:
+				closest_unit = select_closest_unit_from_group(nearby_units())
+			emit_signal("on_unit_exited", body)
+			emit_signal("on_group_changed")
+			if closest_unit != old_closest:
+				emit_signal("on_closest_unit_changed")
+
 func select_closest_unit_from_group(bodies:Array)->Node2D:
 	var unit:Node2D = null
 	for body in bodies:
 		unit = select_closest_unit(unit, body)
 	return unit
-	
+
 func select_closest_unit(body1:Node2D, body2:Node2D)->Node2D:
 	if body1 == null:
 		return body2
