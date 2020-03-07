@@ -1,7 +1,7 @@
 extends Node
 
 export var process_input			:= false
-export var process_unhandled_input 	:= false
+export var process_unhandled_input 	:= true
 
 signal on_left_mouse_down
 signal on_left_mouse_up
