@@ -18,6 +18,14 @@ func _ready():
 func select_units(units:Array):
 	print ("[UnitSelector] on_left_mouse_button_pressed")
 	selected_units = units
+	for unit in selected_units:
+		var health = unit.get_node("Health")
+		if health != null:
+			health.connect("on_death", self, "on_selected_unit_death", [unit])
+	emit_signal("on_selection_changed", selected_units)
+	
+func on_selected_unit_death(unit):
+	selected_units.erase(unit)
 	emit_signal("on_selection_changed", selected_units)
 	
 func deselect_units():

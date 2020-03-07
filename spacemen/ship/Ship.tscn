@@ -1,37 +1,44 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/ShipSteering.gd" type="Script" id=2]
 [ext_resource path="res://spacemen/scripts/ProximityGroup.gd" type="Script" id=3]
 [ext_resource path="res://spacemen/weapon/Weapon.gd" type="Script" id=4]
 [ext_resource path="res://spacemen/weapon/TargetEnemy.gd" type="Script" id=5]
+[ext_resource path="res://spacemen/ship/Health.gd" type="Script" id=6]
+[ext_resource path="res://spacemen/ship/Identity.gd" type="Script" id=7]
 
 [sub_resource type="CircleShape2D" id=2]
+radius = 100.0
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=3]
 radius = 20.0
 
 [node name="Ship" type="KinematicBody2D"]
 input_pickable = true
 script = ExtResource( 1 )
 
-[node name="Enemies" type="Node" parent="."]
-script = ExtResource( 3 )
+[node name="Identity" type="Node" parent="."]
+script = ExtResource( 7 )
 
-[node name="DetectionArea" type="Area2D" parent="Enemies"]
-monitorable = false
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 6 )
 
-[node name="DetectionCircle" type="CollisionShape2D" parent="Enemies/DetectionArea"]
-shape = SubResource( 2 )
-
-[node name="TargetEnemy" type="Node" parent="."]
-script = ExtResource( 5 )
+[node name="Steering" type="Node" parent="."]
+script = ExtResource( 2 )
 
 [node name="Weapon" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="Steering" type="Node" parent="."]
-script = ExtResource( 2 )
+[node name="TargetEnemy" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="NearbyEnemies" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource( 3 )
+
+[node name="DetectionCircle" type="CollisionShape2D" parent="NearbyEnemies"]
+shape = SubResource( 2 )
 
 [node name="BodyPolygon" type="Polygon2D" parent="."]
 position = Vector2( 0, 10 )
@@ -39,4 +46,4 @@ rotation = 3.14159
 polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
 
 [node name="BodyCircle" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 3 )

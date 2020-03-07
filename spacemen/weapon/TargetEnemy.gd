@@ -1,17 +1,14 @@
 extends Node
 
-var override_target_enemy:Node = null
-var target_enemy:Node=null
+onready var nearby_enemies = $"../NearbyEnemies"
 
+var override_target_enemy:Node2D = null
 
+func select_target(t:Node2D):
+	override_target_enemy = t
 
-func overlapping_units():
-	return detection_area.get_overlapping_areas()
-	
-func on_body_entered(body:Node):
-	if target_enemy == null:
-		pass
-	pass
-
-func on_body_exited(body:Node):
-	pass	
+func get_target()->Node2D:
+	if override_target_enemy != null:
+		return override_target_enemy
+	else:
+		return nearby_enemies.closest_unit

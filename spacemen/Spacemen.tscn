@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://spacemen/unit_selection/UnitSelector.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/Ship.tscn" type="PackedScene" id=2]
@@ -6,9 +6,21 @@
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircles.gd" type="Script" id=5]
 [ext_resource path="res://spacemen/unit_selection/BoxSelector.gd" type="Script" id=6]
+[ext_resource path="res://spacemen/weapon/Weapon.gd" type="Script" id=7]
+[ext_resource path="res://spacemen/scripts/ProximityGroup.gd" type="Script" id=8]
+[ext_resource path="res://spacemen/ship/Health.gd" type="Script" id=9]
+[ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=10]
+[ext_resource path="res://spacemen/weapon/TargetEnemy.gd" type="Script" id=11]
+[ext_resource path="res://spacemen/ship/ShipSteering.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.5, 0.5 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 20.0
 
 [node name="SpacemenGame" type="Node2D"]
 
@@ -16,6 +28,7 @@ extents = Vector2( 0.5, 0.5 )
 script = ExtResource( 6 )
 
 [node name="SelectionBox" type="Node2D" parent="BoxSelector"]
+visible = false
 scale = Vector2( 20, 20 )
 
 [node name="Polygon2D" type="Polygon2D" parent="BoxSelector/SelectionBox"]
@@ -40,3 +53,36 @@ script = ExtResource( 5 )
 selection_circle_scene = ExtResource( 4 )
 
 [node name="Ship" parent="." instance=ExtResource( 2 )]
+
+[node name="Ship2" type="KinematicBody2D" parent="."]
+position = Vector2( 401.481, 121.79 )
+input_pickable = true
+script = ExtResource( 10 )
+
+[node name="Health" type="Node" parent="Ship2"]
+script = ExtResource( 9 )
+starting_health = 24
+
+[node name="Steering" type="Node" parent="Ship2"]
+script = ExtResource( 12 )
+
+[node name="Weapon" type="Node" parent="Ship2"]
+script = ExtResource( 7 )
+
+[node name="TargetEnemy" type="Node" parent="Ship2"]
+script = ExtResource( 11 )
+
+[node name="NearbyEnemies" type="Area2D" parent="Ship2"]
+monitorable = false
+script = ExtResource( 8 )
+
+[node name="DetectionCircle" type="CollisionShape2D" parent="Ship2/NearbyEnemies"]
+shape = SubResource( 2 )
+
+[node name="BodyPolygon" type="Polygon2D" parent="Ship2"]
+position = Vector2( 0, 10 )
+rotation = 3.14159
+polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
+
+[node name="BodyCircle" type="CollisionShape2D" parent="Ship2"]
+shape = SubResource( 3 )

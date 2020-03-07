@@ -1,4 +1,4 @@
-extends Node
+extends Area2D
 signal on_closest_unit_changed
 signal on_group_changed
 signal on_unit_entered
@@ -7,14 +7,13 @@ signal on_unit_exited
 var nearby_units := []
 var closest_unit:Node2D = null
 
-onready var detection_area = $DetectionArea
 
 func _ready():
-	detection_area.connect("body_entered", self, "on_body_entered")
-	detection_area.connect("body_exited", self, "on_body_exited")
+	connect("body_entered", self, "on_body_entered")
+	connect("body_exited", self, "on_body_exited")
 
 func nearby_units():
-	return detection_area.get_overlapping_bodies()
+	return get_overlapping_bodies()
 	
 func on_body_entered(body:Node2D):
 	var old_closest := closest_unit
@@ -45,7 +44,7 @@ func select_closest_unit(body1:Node2D, body2:Node2D)->Node2D:
 	if body2 == null:
 		return body1
 		
-	var my_position:Vector2 = detection_area.global_position
+	var my_position:Vector2 = global_position
 	var distance1:float = body1.global_position.distance_to(my_position)
 	var distance2:float = body2.global_position.distance_to(my_position)
 	

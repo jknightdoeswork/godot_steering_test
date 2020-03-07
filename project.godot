@@ -196,6 +196,12 @@ config/icon="res://icon.png"
 
 mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
 
+[layer_names]
+
+2d_physics/layer_1="All"
+2d_physics/layer_2="Faction1"
+2d_physics/layer_3="Faction2"
+
 [rendering]
 
 environment/default_clear_color=Color( 0.2, 0.129412, 0.247059, 1 )
