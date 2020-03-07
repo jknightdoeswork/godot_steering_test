@@ -192,8 +192,12 @@ config/name="spacemen"
 run/main_scene="res://spacemen/Spacemen.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
+
 [rendering]
 
-environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_clear_color=Color( 0.2, 0.129412, 0.247059, 1 )
 quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"

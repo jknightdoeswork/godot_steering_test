@@ -34,4 +34,4 @@ func min_box_scale(scale):
 		scale.x = sign(scale.x)
 	if abs(scale.y) < 1.0:
 		scale.y = sign(scale.y)
-		
+	return scale

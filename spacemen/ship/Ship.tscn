@@ -1,6 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=1]
+[ext_resource path="res://spacemen/ship/ShipSteering.gd" type="Script" id=2]
+[ext_resource path="res://spacemen/scripts/ProximityGroup.gd" type="Script" id=3]
+[ext_resource path="res://spacemen/weapon/Weapon.gd" type="Script" id=4]
+[ext_resource path="res://spacemen/weapon/TargetEnemy.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 20.0
@@ -9,10 +15,28 @@ radius = 20.0
 input_pickable = true
 script = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+[node name="Enemies" type="Node" parent="."]
+script = ExtResource( 3 )
 
-[node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
+[node name="TargetEnemy" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="DetectionArea" type="Area2D" parent="TargetEnemy"]
+monitorable = false
+
+[node name="DetectionCircle" type="CollisionShape2D" parent="TargetEnemy/DetectionArea"]
+shape = SubResource( 2 )
+
+[node name="Weapon" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Steering" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="BodyPolygon" type="Polygon2D" parent="."]
 position = Vector2( 0, 10 )
 rotation = 3.14159
 polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
+
+[node name="BodyCircle" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )

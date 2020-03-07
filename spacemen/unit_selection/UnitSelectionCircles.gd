@@ -15,7 +15,7 @@ func on_selection_changed(selected_units):
 		s.queue_free()
 	selection_circles.clear()
 	for selected_unit in selected_units:
-		print ("instancing selected circle")
+		print ("[UnitSelectionCircles] instancing selected circle")
 		var selection_circle_instance = selection_circle_scene.instance()
 		selection_circles.append(selection_circle_instance)
 		selected_unit.add_child(selection_circle_instance)

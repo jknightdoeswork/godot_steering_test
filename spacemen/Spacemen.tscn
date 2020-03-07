@@ -5,7 +5,7 @@
 [ext_resource path="res://spacemen/scripts/InputSignals.gd" type="Script" id=3]
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://spacemen/unit_selection/UnitSelectionCircles.gd" type="Script" id=5]
-[ext_resource path="res://spacemen/BoxSelector.gd" type="Script" id=6]
+[ext_resource path="res://spacemen/unit_selection/BoxSelector.gd" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.5, 0.5 )
@@ -24,7 +24,6 @@ color = Color( 1, 1, 1, 0.294118 )
 polygon = PoolVector2Array( -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5 )
 
 [node name="Area2D" type="Area2D" parent="BoxSelector/SelectionBox/Polygon2D"]
-scale = Vector2( 1, 1 )
 gravity_vec = Vector2( 0, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxSelector/SelectionBox/Polygon2D/Area2D"]

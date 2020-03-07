@@ -16,12 +16,12 @@ func _ready():
 	assert(error == OK)
 
 func select_units(units:Array):
-	print ("[Game] on_left_mouse_button_pressed")
+	print ("[UnitSelector] on_left_mouse_button_pressed")
 	selected_units = units
 	emit_signal("on_selection_changed", selected_units)
 	
 func deselect_units():
-	print ("deselecting units")
+	print ("[UnitSelector] deselecting units")
 	select_units([])
 	
 
@@ -42,6 +42,8 @@ func on_right_mouse_down(position:Vector2):
 			selected_unit.issue_arrive_order(position)
 	
 func on_ship_clicked(ship):
-	print ("selecting unit " + str(ship))
-	select_units([ship])
+	#print ("selecting unit " + str(ship))
+	#print ("selecting unit " + str(ship))
+	#select_units([ship])
+	pass
 
