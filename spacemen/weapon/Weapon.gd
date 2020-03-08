@@ -12,13 +12,17 @@ var shot_timer := 0.0
 func _physics_process(delta):
 	# if target available, fire weapon with cooldown
 	if shot_timer <= 0.0:
-		var target:Node2D = target_enemy.get_target()
+		var target:Node2D = target_enemy.get_target() as Node2D
 		if target != null:
 			var target_health = target.get_node("Health")
 			if target_health != null:
 				shot_timer = cooldown
 				target_health.take_damage(damage)
 				emit_signal("on_weapon_fired", target)
+			else:
+				print ("[Weapon] No health on target")
+		else:
+			print ("[Weapon] Target isnt node2d")
 	else:
 		shot_timer -= delta
 
