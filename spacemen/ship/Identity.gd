@@ -7,6 +7,7 @@ enum IdentityType {
 
 export(IdentityType) var type
 export(int) var faction
+export(Color) var color
 
 func compare_identities(i:Identity)->bool:
 	if type == i.type:

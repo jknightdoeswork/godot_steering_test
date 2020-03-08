@@ -24,12 +24,4 @@ func spawn_ship():
 	var identity := ship.get_node("Identity") as Identity
 	assert(identity != null)
 	identity.faction = faction
-	
-	# Set Color
-	var body_poly := ship.get_node("BodyPolygon") as Polygon2D
-	assert(body_poly != null)
-	body_poly.color = body_color
-	
-	var line_poly := ship.get_node("BodyLine") as Line2D
-	assert(line_poly != null)
-	line_poly.default_color = color
+	identity.color = color
