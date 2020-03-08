@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/ShipSteering.gd" type="Script" id=2]
@@ -7,11 +7,15 @@
 [ext_resource path="res://spacemen/weapon/TargetEnemy.gd" type="Script" id=5]
 [ext_resource path="res://spacemen/ship/Health.gd" type="Script" id=6]
 [ext_resource path="res://spacemen/ship/Identity.gd" type="Script" id=7]
+[ext_resource path="res://spacemen/weapon/WeaponEffects.gd" type="Script" id=8]
+[ext_resource path="res://spacemen/weapon/WeaponEffectLine.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.0
 
 [sub_resource type="CircleShape2D" id=2]
+
+[sub_resource type="CircleShape2D" id=3]
 radius = 20.0
 
 [node name="Ship" type="KinematicBody2D"]
@@ -29,10 +33,11 @@ script = ExtResource( 2 )
 
 [node name="Weapon" type="Node" parent="."]
 script = ExtResource( 4 )
-damage = 0
 
 [node name="TargetEnemy" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="Color" type="Node" parent="."]
 
 [node name="NearbyEnemies" type="Area2D" parent="."]
 monitorable = false
@@ -42,9 +47,29 @@ script = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="BodyPolygon" type="Polygon2D" parent="."]
-position = Vector2( 0, 10 )
-rotation = 3.14159
-polygon = PoolVector2Array( -10, 0, 10, 0, 0, 20 )
+position = Vector2( 0, -2.5 )
+polygon = PoolVector2Array( -10, 10, 0, -10, 10, 10, 0, 4 )
 
-[node name="BodyCircle" type="CollisionShape2D" parent="."]
+[node name="BodyCollisionCircle" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[node name="ClickableArea" type="Area2D" parent="."]
+monitoring = false
+collision_layer = 2
+collision_mask = 0
+
+[node name="ClickableCircle" type="CollisionShape2D" parent="ClickableArea"]
+shape = SubResource( 3 )
+
+[node name="BodyLine" type="Line2D" parent="."]
+position = Vector2( 0, -2.5 )
+points = PoolVector2Array( -10, 10, 0, -10, 10, 10, 0, 4, -10, 10, 0, -10 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+sharp_limit = 10.0
+round_precision = 10
+antialiased = true
+
+[node name="WeaponEffects" type="Node2D" parent="."]
+script = ExtResource( 8 )
+weapon_line_scene = ExtResource( 9 )

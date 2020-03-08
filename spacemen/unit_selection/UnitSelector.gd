@@ -22,6 +22,8 @@ func select_units(units:Array):
 		var health = unit.get_node("Health")
 		if health != null:
 			health.connect("on_death", self, "on_selected_unit_death", [unit])
+		else:
+			print ("no health on unit")
 	emit_signal("on_selection_changed", selected_units)
 	
 func on_selected_unit_death(unit):

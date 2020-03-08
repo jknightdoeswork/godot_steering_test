@@ -1,6 +1,6 @@
 extends Node
 
-onready var kinematic_body = $"../"
+onready var kinematic_body 	:= $"../" as KinematicBody2D
 onready var agent 			:= GSAIKinematicBody2DAgent.new(kinematic_body)
 onready var arrive_target 	:= GSAIAgentLocation.new()
 onready var arrive 			:= GSAIArrive.new(agent, arrive_target)
@@ -12,6 +12,7 @@ var _velocity 		:= Vector2()
 var _drag 			:= 0.1
 
 func _ready() -> void:
+	agent.position 					= GSAIUtils.to_vector3(kinematic_body.global_position)
 	agent.linear_speed_max 			= 8000.0
 	agent.linear_acceleration_max 	= 500.0
 	agent.linear_drag_percentage 	= 0.1

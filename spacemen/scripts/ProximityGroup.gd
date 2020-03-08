@@ -8,6 +8,11 @@ signal on_unit_exited
 var nearby_units := []
 var closest_unit:Node2D = null
 
+enum DetectionType {
+	Friendly,
+	Enemy
+}
+export(DetectionType) var detection_type
 onready var identity:Identity = $"../Identity" as Identity
 
 func _ready():
@@ -25,6 +30,12 @@ func nearby_units():
 	
 	return filtered_bodies
 
+func identity_compare(id1:Identity, id2:Identity)->bool:
+	if detection_type == DetectionType.Friendly:
+		return id1.is_friend(id2)
+	else:
+		return id2.is_enemy(id2)
+		
 func on_body_entered(body:Node2D):
 	var other_identity = body.get_node("Identity")
 	if other_identity != null:

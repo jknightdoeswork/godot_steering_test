@@ -204,12 +204,11 @@ mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
 
 [layer_names]
 
-2d_physics/layer_1="All"
-2d_physics/layer_2="Faction1"
-2d_physics/layer_3="Faction2"
+2d_physics/layer_1="Bodies"
+2d_physics/layer_2="Clickable"
 
 [rendering]
 
-environment/default_clear_color=Color( 0.2, 0.129412, 0.247059, 1 )
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"

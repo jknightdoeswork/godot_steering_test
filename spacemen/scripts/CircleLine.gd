@@ -1,7 +1,7 @@
 tool
 extends Line2D
 export var numsides = 32 setget set_numsides
-export var radius = 10 setget set_radius
+export var radius = 10.0 setget set_radius
 
 func create_poly(var n, var r):
 	#print ("[CirclePolygon] create_poly (" + str(n) + ", " + str(r) + ")")

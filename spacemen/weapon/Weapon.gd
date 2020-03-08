@@ -1,5 +1,7 @@
 extends Node
+
 signal on_weapon_fired
+
 export var damage := 3
 export var cooldown := 1.0
 
@@ -15,10 +17,8 @@ func _physics_process(delta):
 			var target_health = target.get_node("Health")
 			if target_health != null:
 				shot_timer = cooldown
-				fire(target_health)
+				target_health.take_damage(damage)
+				emit_signal("on_weapon_fired", target)
 	else:
 		shot_timer -= delta
 
-func fire(target_health):
-	target_health.take_damage(damage)
-	emit_signal("on_weapon_fired")

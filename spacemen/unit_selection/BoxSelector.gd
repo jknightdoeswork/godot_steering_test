@@ -20,13 +20,17 @@ func on_left_mouse_down(position:Vector2):
 	
 func on_left_mouse_up(position:Vector2):
 	box.visible = false
-	var selected_units = box_area.get_overlapping_bodies()
-	unit_selection.select_units(selected_units)
+	var selected_units = box_area.get_overlapping_areas()
+	print ("num overlapping units: " + str(selected_units.size()))
+	var selected_unit_bodies := []
+	for unit in selected_units:
+		selected_unit_bodies.append(unit.get_parent())
+	unit_selection.select_units(selected_unit_bodies)
 	
 func _process(delta: float) -> void:
 	if box.visible:
 		var mouse_delta = get_viewport().get_mouse_position() - mouse_down_position
-		box.scale =  min_box_scale(mouse_delta)
+		box.scale = min_box_scale(mouse_delta)
 		
 func min_box_scale(scale):
 	# Minimum of 1px box dimensions
