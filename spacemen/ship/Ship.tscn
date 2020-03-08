@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://spacemen/ship/Ship.gd" type="Script" id=1]
 [ext_resource path="res://spacemen/ship/ShipSteering.gd" type="Script" id=2]
@@ -9,14 +9,15 @@
 [ext_resource path="res://spacemen/ship/Identity.gd" type="Script" id=7]
 [ext_resource path="res://spacemen/weapon/WeaponEffects.gd" type="Script" id=8]
 [ext_resource path="res://spacemen/weapon/WeaponEffectLine.tscn" type="PackedScene" id=9]
+[ext_resource path="res://goodoh/components/LinkProperty.gd" type="Script" id=10]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 20.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.0
 
 [sub_resource type="CircleShape2D" id=2]
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 20.0
 
 [node name="Ship" type="KinematicBody2D"]
 input_pickable = true
@@ -37,20 +38,6 @@ script = ExtResource( 4 )
 [node name="TargetEnemy" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="NearbyEnemies" type="Area2D" parent="."]
-monitorable = false
-script = ExtResource( 3 )
-
-[node name="DetectionCircle" type="CollisionShape2D" parent="NearbyEnemies"]
-shape = SubResource( 1 )
-
-[node name="BodyPolygon" type="Polygon2D" parent="."]
-position = Vector2( 0, -2.5 )
-polygon = PoolVector2Array( -10, 10, 0, -10, 10, 10, 0, 4 )
-
-[node name="BodyCollisionCircle" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
-
 [node name="ClickableArea" type="Area2D" parent="."]
 monitoring = false
 collision_layer = 2
@@ -58,6 +45,13 @@ collision_mask = 0
 
 [node name="ClickableCircle" type="CollisionShape2D" parent="ClickableArea"]
 shape = SubResource( 3 )
+
+[node name="NearbyEnemies" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource( 3 )
+
+[node name="DetectionCircle" type="CollisionShape2D" parent="NearbyEnemies"]
+shape = SubResource( 1 )
 
 [node name="BodyLine" type="Line2D" parent="."]
 position = Vector2( 0, -2.5 )
@@ -67,6 +61,25 @@ default_color = Color( 1, 1, 1, 1 )
 sharp_limit = 10.0
 round_precision = 10
 antialiased = true
+
+[node name="LinkColor" type="Node" parent="BodyLine"]
+script = ExtResource( 10 )
+property_name = "default_color"
+other_node = NodePath("../../Identity")
+other_property_name = "color"
+
+[node name="BodyPolygon" type="Polygon2D" parent="."]
+position = Vector2( 0, -2.5 )
+polygon = PoolVector2Array( -10, 10, 0, -10, 10, 10, 0, 4 )
+
+[node name="LinkColor" type="Node" parent="BodyPolygon"]
+script = ExtResource( 10 )
+property_name = "color"
+other_node = NodePath("../../Identity")
+other_property_name = "color"
+
+[node name="BodyCollisionCircle" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
 
 [node name="WeaponEffects" type="Node2D" parent="."]
 script = ExtResource( 8 )

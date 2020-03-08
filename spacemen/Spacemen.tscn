@@ -49,6 +49,8 @@ position = Vector2( 100, 100 )
 script = ExtResource( 13 )
 color = Color( 0.227451, 0.384314, 0.584314, 1 )
 body_color = Color( 0.227451, 0.384314, 0.584314, 0.407843 )
+spawn_rate = 2.0
+enabled = true
 ship_scene = ExtResource( 2 )
 
 [node name="RedTeam" type="Node2D" parent="."]
@@ -56,5 +58,7 @@ position = Vector2( 924, 100 )
 script = ExtResource( 13 )
 color = Color( 0.603922, 0.286275, 0.286275, 1 )
 body_color = Color( 0.603922, 0.286275, 0.286275, 0.415686 )
+spawn_rate = 2.0
 faction = 1
+enabled = true
 ship_scene = ExtResource( 2 )

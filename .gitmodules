@@ -1,0 +1,3 @@
+[submodule "goodoh"]
+	path = goodoh
+	url = git@github.com:jknightdoeswork/goodoh.git

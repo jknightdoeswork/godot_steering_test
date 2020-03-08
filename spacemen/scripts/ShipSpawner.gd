@@ -4,6 +4,7 @@ export(Color) var color
 export(Color) var body_color
 export var spawn_rate := 1.0
 export var faction := 0
+export var enabled := false
 
 export(PackedScene) var ship_scene
 
@@ -17,11 +18,20 @@ func _process(delta: float) -> void:
 		spawn_timer -= delta
 
 func spawn_ship():
+	if !enabled:
+		return
+	print ("[ShipSpawner] instancing")
 	var ship = ship_scene.instance()
-	add_child(ship)
 	
 	# Set identity
 	var identity := ship.get_node("Identity") as Identity
 	assert(identity != null)
 	identity.faction = faction
 	identity.color = color
+	print ("[ShipSpawner] color set")
+
+
+	print ("[ShipSpawner] add_child")
+	add_child(ship)
+	
+	
