@@ -353,6 +353,7 @@ mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"
