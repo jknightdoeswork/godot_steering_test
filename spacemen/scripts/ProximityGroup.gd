@@ -92,4 +92,3 @@ func refresh_closest_unit():
 		
 func _physics_process(delta):
 	refresh_closest_unit()
-	

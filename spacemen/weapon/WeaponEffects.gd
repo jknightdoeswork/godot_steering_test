@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var identity = $"../Identity"
 onready var weapon = $"../Weapon"
 
 export(PackedScene) var weapon_line_scene
@@ -17,5 +18,5 @@ func on_weapon_fired(target:Node2D):
 	
 	weapon_line.position = start_position
 	weapon_line.points[1] = end_position - start_position
-	
+	weapon_line.default_color = identity.color
 	

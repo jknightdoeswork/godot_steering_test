@@ -52,8 +52,8 @@ color = Color( 0.227451, 0.384314, 0.584314, 1 )
 body_color = Color( 0.227451, 0.384314, 0.584314, 0.407843 )
 spawn_rate = 0.5
 enabled = true
-max_spawn = 15
-initial_spawn = 5
+max_spawn = 20
+initial_spawn = 50
 ship_scene = ExtResource( 2 )
 
 [node name="RedTeam" type="Node2D" parent="."]
@@ -63,11 +63,11 @@ color = Color( 0.603922, 0.286275, 0.286275, 1 )
 body_color = Color( 0.603922, 0.286275, 0.286275, 0.415686 )
 faction = 1
 enabled = true
-max_spawn = 15
-initial_spawn = 5
+max_spawn = 20
+initial_spawn = 50
 ship_scene = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="."]
+[node name="FPSLabel" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
 text = "0fps"
