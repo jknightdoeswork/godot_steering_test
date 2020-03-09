@@ -11,4 +11,4 @@ func get_target()->Node2D:
 	if override_target_enemy != null:
 		return override_target_enemy
 	else:
-		return nearby_enemies.closest_unit
+		return nearby_enemies.closest_unit()

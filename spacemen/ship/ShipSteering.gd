@@ -8,21 +8,23 @@ onready var look 			:= GSAILookWhereYouGo.new(agent)
 onready var blend 			:= GSAIBlend.new(agent)
 
 var _accel 			:= GSAITargetAcceleration.new()
-var _velocity 		:= Vector2()
+var _velocity 		:= Vector2.ZERO
 var _drag 			:= 0.1
 
 func _ready() -> void:
+	print ("ship ready at: " +str(kinematic_body.global_position))
 	agent.position 					= GSAIUtils.to_vector3(kinematic_body.global_position)
-	agent.linear_speed_max 			= 8000.0
-	agent.linear_acceleration_max 	= 500.0
+	agent._last_position			= kinematic_body.global_position
+	agent.linear_speed_max 			= 250.0
+	agent.linear_acceleration_max 	= 1500.0
 	agent.linear_drag_percentage 	= 0.1
 	agent.angular_speed_max 		= 250.0
 	agent.angular_acceleration_max 	= 100.0
 	agent.angular_drag_percentage 	= 0.25
 
 	arrive_target.position 			= agent.position
-	arrive.deceleration_radius 		= 250.0
-	arrive.arrival_tolerance 		= 25.0
+	arrive.deceleration_radius 		= 50.0
+	arrive.arrival_tolerance 		= 5.0
 	
 	look.alignment_tolerance = deg2rad(5.0)
 	look.deceleration_radius = deg2rad(45)
@@ -32,10 +34,11 @@ func _ready() -> void:
 	
 	
 func issue_arrive_order(arrive_position:Vector2):
-	print ("[ShipSteering] issue_arrive_order: %s" % [arrive_position])
+	#print ("[ShipSteering] issue_arrive_order: %s" % [arrive_position])
 	arrive_target.position = GSAIUtils.to_vector3(arrive_position)
 	arrive_target.orientation = rand_range(0.0, 2.0*PI)
 	
 func _physics_process(delta: float) -> void:
 	blend.calculate_steering(_accel)
 	agent._apply_steering(_accel, delta)
+	pass

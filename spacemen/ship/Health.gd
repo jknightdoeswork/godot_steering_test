@@ -9,11 +9,24 @@ var health_points := 0
 
 func _ready():
 	health_points = starting_health
-	
+
+func is_dead()->bool:
+	return !is_alive()
+
+func is_alive()->bool:
+	return health_points > 0
+
 func take_damage(damage:int):
+	if is_dead():
+		print ("[Health] take_damage is_dead")
+		return
+	
 	emit_signal("on_damage")
 	health_points -= damage
 	if health_points <= 0:
 		health_points = 0
+		var parent = get_parent()
+		assert(parent != null)
+		print ("[Health] take_damage death %s" % [parent])
 		emit_signal("on_death")
-		get_parent().queue_free()
+		parent.queue_free()

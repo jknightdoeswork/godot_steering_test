@@ -1,14 +1,18 @@
-extends Node
+extends Node2D
+
+signal on_ship_spawned
 
 export(Color) var color
 export(Color) var body_color
 export var spawn_rate := 1.0
 export var faction := 0
 export var enabled := false
+export var max_spawn := 1
 
 export(PackedScene) var ship_scene
 
 var spawn_timer := 0.0
+var num_spawned := 0
 
 func _process(delta: float) -> void:
 	if spawn_timer <= 0:
@@ -20,18 +24,29 @@ func _process(delta: float) -> void:
 func spawn_ship():
 	if !enabled:
 		return
-	print ("[ShipSpawner] instancing")
-	var ship = ship_scene.instance()
+	if max_spawn > -1:
+		if num_spawned >= max_spawn:
+			return
+		
+	var ship := ship_scene.instance() as KinematicBody2D
+	assert(ship != null)
+	
+	if faction == 1:
+		print ("spawning at: " + str(self.global_position))
+	
+	ship.position = Vector2(rand_range(-5.0, 5.0), rand_range(-5.0, 5.0))
+	#ship.global_position = self.global_position
+	
 	
 	# Set identity
 	var identity := ship.get_node("Identity") as Identity
 	assert(identity != null)
 	identity.faction = faction
 	identity.color = color
-	print ("[ShipSpawner] color set")
-
-
-	print ("[ShipSpawner] add_child")
+	
+	# Add child
 	add_child(ship)
 	
+	num_spawned += 1
 	
+	emit_signal("on_ship_spawned", ship)

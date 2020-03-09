@@ -20,9 +20,10 @@ func _physics_process(delta):
 				target_health.take_damage(damage)
 				emit_signal("on_weapon_fired", target)
 			else:
-				print ("[Weapon] No health on target")
+				printerr ("[Weapon] No health on target")
 		else:
-			print ("[Weapon] Target isnt node2d")
+			#print ("[Weapon] Target isnt node2d")
+			pass
 	else:
 		shot_timer -= delta
 

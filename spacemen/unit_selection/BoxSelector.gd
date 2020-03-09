@@ -16,12 +16,11 @@ func on_left_mouse_down(position:Vector2):
 	mouse_down_position = position
 	box.visible = true
 	box.position = position
-	box.scale = Vector2(1.0,1.0)
+	box.scale = min_box_scale(Vector2.ZERO)
 	
 func on_left_mouse_up(position:Vector2):
 	box.visible = false
 	var selected_units = box_area.get_overlapping_areas()
-	print ("num overlapping units: " + str(selected_units.size()))
 	var selected_unit_bodies := []
 	for unit in selected_units:
 		selected_unit_bodies.append(unit.get_parent())
