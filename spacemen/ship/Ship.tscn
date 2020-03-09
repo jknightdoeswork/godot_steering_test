@@ -46,6 +46,7 @@ collision_mask = 0
 shape = SubResource( 1 )
 
 [node name="NearbyEnemies" type="Area2D" parent="."]
+position = Vector2( -1, 0 )
 monitorable = false
 script = ExtResource( 3 )
 

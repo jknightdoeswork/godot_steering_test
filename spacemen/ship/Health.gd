@@ -27,6 +27,5 @@ func take_damage(damage:int):
 		health_points = 0
 		var parent = get_parent()
 		assert(parent != null)
-		print ("[Health] take_damage death %s" % [parent])
 		emit_signal("on_death")
 		parent.queue_free()

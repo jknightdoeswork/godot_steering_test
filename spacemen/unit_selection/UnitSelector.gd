@@ -54,6 +54,5 @@ func on_ship_spawned(ship):
 
 func on_selected_unit_death(unit:Node):
 	if selected_units.has(unit):
-		print ("selected unit death")
 		selected_units.erase(unit)
 		emit_signal("on_selection_changed", selected_units)

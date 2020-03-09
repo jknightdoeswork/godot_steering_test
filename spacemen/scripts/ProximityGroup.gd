@@ -7,12 +7,6 @@ signal on_unit_exited
 
 var _closest_unit:Node2D = null
 
-enum DetectionType {
-	Friendly,
-	Enemy
-}
-
-export(DetectionType) var detection_type
 onready var identity:Identity = $"../Identity" as Identity
 
 func _ready():
@@ -21,8 +15,8 @@ func _ready():
 
 func closest_unit():
 	return _closest_unit
-	
-func nearby_units():
+
+func nearby_enemies():
 	var bodies := get_overlapping_bodies()
 	var filtered_bodies := []
 	for b in bodies:
@@ -30,22 +24,34 @@ func nearby_units():
 		if other_identity != null:
 			if identity.is_enemy(other_identity):
 				filtered_bodies.append(b)
-	
 	return filtered_bodies
 
-func identity_compare(id1:Identity, id2:Identity)->bool:
-	if detection_type == DetectionType.Friendly:
-		return id1.is_friend(id2)
-	else:
-		return id2.is_enemy(id2)
-		
+func nearby_friendlies():
+	var bodies := get_overlapping_bodies()
+	var filtered_bodies := []
+	for b in bodies:
+		var other_identity = b.get_node("Identity")
+		if other_identity != null:
+			if identity.is_friendly(other_identity) and identity != other_identity:
+				filtered_bodies.append(b)
+	return filtered_bodies
+	
+func nearby_units():
+	var bodies := get_overlapping_bodies()
+	var filtered_bodies := []
+	for b in bodies:
+		var other_identity = b.get_node("Identity")
+		if other_identity != null:
+			if identity != other_identity:
+				filtered_bodies.append(b)
+	return filtered_bodies
+
 func on_body_entered(body:Node2D):
 	#print ("[ProximityGroup] on_body_entered %s" % [body])
 	var other_identity = body.get_node("Identity")
 	if other_identity != null:
-		if identity.is_enemy(other_identity):
-			emit_signal("on_unit_entered", body)
-			emit_signal("on_group_changed")
+		emit_signal("on_unit_entered", body)
+		emit_signal("on_group_changed")
 	else:
 		print ("no id")
 
@@ -53,9 +59,8 @@ func on_body_exited(body:Node):
 	#print ("[ProximityGroup] on_body_exited %s" % [body])
 	var other_identity = body.get_node("Identity")
 	if other_identity != null:
-		if identity.is_enemy(other_identity):
-			emit_signal("on_unit_exited", body)
-			emit_signal("on_group_changed")
+		emit_signal("on_unit_exited", body)
+		emit_signal("on_group_changed")
 
 
 func select_closest_unit_from_group(bodies:Array)->Node2D:
@@ -80,7 +85,7 @@ func select_closest_unit(body1:Node2D, body2:Node2D)->Node2D:
 
 func refresh_closest_unit():
 	var old_closest = _closest_unit
-	_closest_unit = select_closest_unit_from_group(nearby_units())
+	_closest_unit = select_closest_unit_from_group(nearby_enemies())
 	if _closest_unit != old_closest:
 		#print ("new closest unit %s" %[closest_unit])
 		emit_signal("on_closest_unit_changed")
