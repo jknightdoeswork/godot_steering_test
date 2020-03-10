@@ -342,6 +342,10 @@ config/name="spacemen"
 run/main_scene="res://spacemen/Spacemen.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Perf="*res://goodoh/perf/Perf.gd"
+
 [display]
 
 mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
@@ -350,6 +354,10 @@ mouse_cursor/custom_image="res://spacemen/cursor/cursor.png"
 
 2d_physics/layer_1="Bodies"
 2d_physics/layer_2="Clickable"
+
+[physics]
+
+common/physics_fps=30
 
 [rendering]
 

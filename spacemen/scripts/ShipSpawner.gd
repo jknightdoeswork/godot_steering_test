@@ -46,6 +46,7 @@ func spawn_ship():
 	assert(identity != null)
 	identity.faction = faction
 	identity.color = color
+	identity.identifier = num_spawned
 	
 	# Watch for death
 	var health = ship.get_node("Health")

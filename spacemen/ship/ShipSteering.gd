@@ -1,13 +1,14 @@
 extends Node
 
+onready var identity		:= $"../Identity"
 onready var nearby			:= $"../NearbyEnemies"
 onready var kinematic_body 	:= $"../" as KinematicBody2D
-onready var agent 			:= GSAIKinematicBody2DAgent.new(kinematic_body)
+onready var agent 			:= GSAIKinematicBody2DAgent.new(kinematic_body, GSAIKinematicBody2DAgent.MovementType.COLLIDE)
 onready var arrive_target 	:= GSAIAgentLocation.new()
 onready var arrive 			:= GSAIArrive.new(agent, arrive_target)
 onready var look 			:= GSAILookWhereYouGo.new(agent)
 onready var blend 			:= GSAIBlend.new(agent)
-onready var avoid_prox		:= GSAIRadiusProximity.new(agent, [], 50.0)
+onready var avoid_prox		:= GSAIRadiusProximity.new(agent, [], 25.0)
 onready var avoid			:= GSAIAvoidCollisions.new(agent, avoid_prox)
 var _accel 					:= GSAITargetAcceleration.new()
 var _velocity 				:= Vector2.ZERO
@@ -21,14 +22,14 @@ func _ready() -> void:
 	agent.linear_drag_percentage 	= 0.1
 	agent.angular_speed_max 		= 250.0
 	agent.angular_acceleration_max 	= 100.0
-	agent.angular_drag_percentage 	= 0.25
+	agent.angular_drag_percentage 	= 0.4
 	agent.bounding_radius			= 10.0
 	arrive_target.position 			= agent.position
-	arrive.deceleration_radius 		= 50.0
-	arrive.arrival_tolerance 		= 5.0
+	arrive.deceleration_radius 		= 100.0
+	arrive.arrival_tolerance 		= 50.0
 	
-	look.alignment_tolerance = deg2rad(5.0)
-	look.deceleration_radius = deg2rad(45)
+	look.alignment_tolerance = deg2rad(10.0)
+	look.deceleration_radius = deg2rad(30)
 	
 	blend.add(avoid, 1.0)
 	blend.add(arrive, 1.0)
@@ -42,6 +43,7 @@ func issue_arrive_order(arrive_position:Vector2):
 	arrive_target.orientation = rand_range(0.0, 2.0*PI)
 	
 func _physics_process(delta: float) -> void:
+	
 	# Add nearby agents to avoidance
 	avoid_prox.agents.clear()
 	for u in nearby.nearby_units():
@@ -54,7 +56,7 @@ func _physics_process(delta: float) -> void:
 				printerr("[ShipSteering] node doesnt have agent")
 		else:
 			printerr("[ShipSteering] node doesnt have steering")
-	
 	blend.calculate_steering(_accel)
+	
 	agent._apply_steering(_accel, delta)
 	
